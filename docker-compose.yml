@@ -1,0 +1,17 @@
+services:
+  whatsapp:
+    build: .
+    container_name: whatsapp-mcp
+    restart: unless-stopped
+    ports:
+      - "8082:8082"  # Go Bridge (optional, nur für Debugging)
+      - "8083:8083"  # MCP SSE Server
+    volumes:
+      - whatsapp-store:/app/whatsapp-bridge/store
+    environment:
+      - MCP_TRANSPORT=sse
+    stdin_open: true  # Für QR-Code beim ersten Start
+    tty: true
+
+volumes:
+  whatsapp-store:
